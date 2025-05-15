@@ -50,9 +50,10 @@ A 12-Factor–compliant FastAPI microservice that classifies news articles as **
 Copy `.env.example` to `.env` and adjust:
 
 ```dotenv
-MODEL_PATH=./models/news_clf_pipeline.pkl
-ALLOWED_HOSTS=["*"]     # JSON array (e.g. ["https://mydomain.com"])
+ALLOWED_HOSTS=["*"]
 PORT=8000
+MODEL_PATH=app/models/news_classifier_pipeline.pkl
+
 ```
 
 ---
@@ -62,13 +63,11 @@ PORT=8000
 ### 1. Clone & Create Virtual Environment
 
 ```bash
-git clone <repo-url>
-cd news_detector
+git clone https://github.com/Axkratos/News-Classifier.git
+cd <working_directory>
 python -m venv .env
-# Linux/macOS
-source .env/bin/activate
 # Windows PowerShell
-.\.env\Scripts\Activate.ps1
+env\Scripts\Activate
 ```
 ### 2. Install Dependencies
 ```bash
