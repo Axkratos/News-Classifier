@@ -1,3 +1,5 @@
+# app/api/routes/classify.py
+
 from fastapi import APIRouter, HTTPException
 from pydantic import BaseModel
 from app.services.predict import predict
@@ -14,7 +16,15 @@ class Prediction(BaseModel):
 
 @router.post("/classify", response_model=Prediction)
 def classify(item: NewsItem):
-    raw = f"{item.title} {item.text}".strip()
+    # 1. Concatenate title + text
+    raw = f"{item.title or ''} {item.text or ''}".strip()
     if not raw:
         raise HTTPException(status_code=400, detail="Empty content")
-    return predict(raw)
+
+    # 2. Delegate to predict(...)
+    try:
+        result = predict(raw)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return Prediction(**result)
